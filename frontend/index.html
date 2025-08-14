@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>AI Recipe Finder - Demo</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>AI Recipe Finder (Demo)</h1>
+            <section id="auth">
+                <h2>Auth</h2>
+                <label for="username">Username:</label
+                ><input id="username" placeholder="username" />
+                <label for="password">Password:</label
+                ><input id="password" placeholder="password" type="password" />
+                <button id="signup">Sign Up</button>
+                <button id="login">Log In</button>
+                <button id="logout" style="display: none">Log Out</button>
+                <div id="token"></div>
+                <div id="error" style="color: red; margin-top: 8px"></div>
+            </section>
+
+            <section id="create">
+                <h2>Create Recipe</h2>
+                <label for="title">Title:</label
+                ><input id="title" placeholder="title" />
+                <label for="image_url">Image URL:</label
+                ><input id="image_url" placeholder="image_url" />
+                <label for="description">Description:</label
+                ><textarea
+                    id="description"
+                    placeholder="description"
+                ></textarea>
+                <label for="ingredients">Ingredients:</label
+                ><input
+                    id="ingredients"
+                    placeholder="comma-separated ingredients"
+                />
+                <button id="createRecipe">Create</button>
+            </section>
+
+            <section id="search">
+                <h2>Search by ingredients</h2>
+                <label for="q">Search ingredients:</label
+                ><input id="q" placeholder="tomato, pasta" />
+                <button id="doSearch">Search</button>
+                <ul id="results"></ul>
+            </section>
+
+            <section id="list">
+                <h2>All Recipes</h2>
+                <button id="refresh">Refresh</button>
+                <ul id="allrecipes"></ul>
+            </section>
+        </div>
+
+        <!-- Edit Recipe Modal -->
+        <div
+            id="editModal"
+            style="
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                align-items: center;
+                justify-content: center;
+            "
+        >
+            <div
+                style="
+                    background: #fff;
+                    padding: 24px;
+                    border-radius: 8px;
+                    max-width: 400px;
+                    width: 90%;
+                    margin: auto;
+                    position: relative;
+                "
+            >
+                <h2>Edit Recipe</h2>
+                <form id="editForm">
+                    <input type="hidden" id="edit_id" />
+                    <label for="edit_title">Title:</label>
+                    <input id="edit_title" required />
+                    <label for="edit_image_url">Image URL:</label>
+                    <input id="edit_image_url" />
+                    <label for="edit_description">Description:</label>
+                    <textarea id="edit_description"></textarea>
+                    <label for="edit_ingredients">Ingredients:</label>
+                    <input
+                        id="edit_ingredients"
+                        placeholder="comma-separated ingredients"
+                    />
+                    <div style="margin-top: 12px">
+                        <button type="submit">Save</button>
+                        <button type="button" id="editCancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="app.js"></script>
+    </body>
+</html>
