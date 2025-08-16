@@ -1,176 +1,213 @@
-# AI-Powered Recipe Finder (Portfolio Project)
+# AI-Powered Recipe Finder
 
-A full-stack web application for finding and managing recipes, built with FastAPI and vanilla JavaScript.
+A FastAPI-based web application that helps users find recipes based on available ingredients. Users can create accounts, add their own recipes, and search through a database of recipes using ingredient-based queries.
 
-## 🚀 Features
+## Features
 
-- **User Authentication**: JWT-based signup and login system
+- **User Authentication**: Secure signup and login with JWT tokens
 - **Recipe Management**: Create, read, update, and delete recipes
-- **Smart Search**: Find recipes by ingredients using comma-separated search
-- **Image Support**: Add images to recipes via URL
-- **Responsive Design**: Clean, mobile-friendly interface
-- **RESTful API**: Well-documented FastAPI backend with automatic OpenAPI docs
+- **Ingredient Search**: Find recipes based on available ingredients
+- **User Ownership**: Users can manage their own recipes
+- **RESTful API**: Clean, documented API endpoints
+- **Database**: SQLite database with SQLAlchemy ORM
 
-## 🏗️ Tech Stack
+## Project Structure
 
-**Backend:**
-- FastAPI (Python web framework)
-- SQLAlchemy 2.0 (ORM)
-- SQLite (database)
-- JWT authentication with python-jose
-- Pydantic v2 (data validation)
-
-**Frontend:**
-- Vanilla HTML/CSS/JavaScript
-- Fetch API for HTTP requests
-- Responsive CSS Grid/Flexbox layout
-
-## 📦 Quick Setup
-
-### Option 1: Automated Setup (Recommended)
-
-```bash
-# Clone and navigate to the project
-cd recipe_finder_portfolio
-
-# Run the setup script
-python3 setup.py
-
-# Start both servers
-python3 run.py
 ```
-
-### Option 2: Manual Setup
-
-```bash
-# Create and activate virtual environment
-python3 -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Start backend server
-uvicorn backend.main:app --reload --port 8000
-
-# In another terminal, start frontend server
-cd frontend
-python3 -m http.server 3000
-```
-
-## 🌐 Access the Application
-
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Documentation**: http://localhost:8000/docs
-- **Alternative API Docs**: http://localhost:8000/redoc
-
-## 📚 Usage
-
-### 1. Authentication
-- Sign up with a username and password
-- Log in to receive a JWT token
-- Token is automatically used for authenticated requests
-
-### 2. Managing Recipes
-- **Create**: Add new recipes with title, description, ingredients, and image URL
-- **View**: Browse all recipes or search by specific ingredients
-- **Update**: Edit your own recipes (ownership-based permissions)
-- **Delete**: Remove recipes you've created
-
-### 3. Search Functionality
-- Enter comma-separated ingredients (e.g., "tomato, pasta, cheese")
-- System finds recipes containing ALL specified ingredients
-- Case-insensitive matching
-
-## 🛠️ Development
-
-### Project Structure
-```
-recipe_finder_portfolio/
-├── backend/
+recipe_finder/
+├── backend/                 # Backend API code
 │   ├── __init__.py
-│   ├── main.py          # FastAPI app and routes
-│   ├── models.py        # SQLAlchemy database models
-│   ├── schemas.py       # Pydantic models for API
-│   ├── database.py      # Database configuration
-│   ├── auth.py          # JWT authentication logic
-│   ├── crud.py          # Database operations
-│   └── seed_data.py     # Sample data seeder
-├── frontend/
-│   ├── index.html       # Main HTML page
-│   ├── app.js          # JavaScript application logic
-│   └── styles.css      # CSS styling
-├── requirements.txt     # Python dependencies
-├── setup.py            # Automated setup script
-├── run.py              # Development server runner
-└── README.md           # This file
+│   ├── main.py             # FastAPI application and endpoints
+│   ├── models.py           # SQLAlchemy database models
+│   ├── schemas.py          # Pydantic data validation schemas
+│   ├── crud.py            # Database CRUD operations
+│   ├── auth.py            # Authentication and JWT handling
+│   └── database.py        # Database connection and setup
+├── frontend/               # Frontend web interface
+│   ├── index.html
+│   ├── app.js
+│   └── styles.css
+├── tests/                  # Comprehensive test suite
+│   ├── __init__.py
+│   ├── conftest.py        # Pytest configuration and fixtures
+│   ├── test_models.py     # Database model tests
+│   ├── test_schemas.py    # Pydantic schema tests
+│   ├── test_auth.py       # Authentication tests
+│   ├── test_crud.py       # CRUD operation tests
+│   ├── test_api.py        # API endpoint tests
+│   └── test_integration.py # Integration and workflow tests
+├── requirements.txt        # Python dependencies
+├── pytest.ini            # Pytest configuration
+├── run_tests.py          # Test runner script
+├── run.py                # Application entry point
+└── setup.py              # Project setup
 ```
 
-### Available Scripts
+## Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd recipe_finder
+   ```
+
+2. **Create a virtual environment**:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the application**:
+   ```bash
+   python run.py
+   ```
+
+The API will be available at `http://localhost:8000`
+
+## API Endpoints
+
+### Authentication
+- `POST /signup` - User registration
+- `POST /login` - User authentication
+
+### Recipes
+- `GET /recipes` - List all recipes (with pagination)
+- `POST /recipes` - Create a new recipe
+- `GET /recipes/{recipe_id}` - Get a specific recipe
+- `PUT /recipes/{recipe_id}` - Update a recipe (owner only)
+- `DELETE /recipes/{recipe_id}` - Delete a recipe (owner only)
+
+### Search
+- `GET /search?q=ingredient1,ingredient2` - Search recipes by ingredients
+
+## Testing
+
+This project includes a comprehensive test suite with **90%+ coverage** target. The tests cover:
+
+- **Unit Tests**: Individual functions and methods
+- **Integration Tests**: Complete workflows and API interactions
+- **Model Tests**: Database models and relationships
+- **Schema Tests**: Data validation and serialization
+- **Authentication Tests**: JWT tokens and password handling
+- **CRUD Tests**: Database operations
+- **API Tests**: HTTP endpoints and error handling
+
+### Running Tests
+
+#### Quick Start
+```bash
+# Install test dependencies
+python run_tests.py install
+
+# Run all tests with coverage
+python run_tests.py coverage
+
+# Run specific test types
+python run_tests.py unit        # Unit tests only
+python run_tests.py integration # Integration tests only
+python run_tests.py all         # All tests
+```
+
+#### Manual Test Execution
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=backend --cov-report=term-missing --cov-report=html
+
+# Run specific test file
+pytest tests/test_models.py -v
+
+# Run specific test class
+pytest tests/test_models.py::TestUserModel -v
+
+# Run specific test method
+pytest tests/test_models.py::TestUserModel::test_create_user -v
+
+# Run tests matching a pattern
+pytest -k "user" -v
+
+# Run tests with detailed output
+pytest -v -s
+```
+
+### Test Coverage
+
+The test suite provides comprehensive coverage:
+
+- **Models**: Database models, relationships, and constraints
+- **Schemas**: Pydantic validation and data transformation
+- **Authentication**: Password hashing, JWT creation/validation
+- **CRUD Operations**: All database operations with edge cases
+- **API Endpoints**: HTTP methods, status codes, error handling
+- **Integration**: Complete user workflows and data persistence
+- **Edge Cases**: Special characters, large data, concurrent operations
+
+### Test Configuration
+
+The project uses `pytest.ini` for configuration:
+- Coverage target: 90%
+- HTML and XML coverage reports
+- Automatic test discovery
+- Warning filters
+
+### Test Database
+
+Tests use a temporary SQLite database that is:
+- Created fresh for each test session
+- Isolated from the main application database
+- Automatically cleaned up after tests complete
+
+## Development
+
+### Adding New Tests
+
+1. **Create test file** in the `tests/` directory
+2. **Follow naming convention**: `test_<module_name>.py`
+3. **Use descriptive test names**: `test_<functionality>_<scenario>`
+4. **Include edge cases** and error scenarios
+5. **Maintain coverage** above 90%
+
+### Test Structure
+
+```python
+class TestFeatureName:
+    """Test cases for specific feature."""
+    
+    def test_scenario_description(self, fixture_name):
+        """Test description explaining what is being tested."""
+        # Arrange
+        # Act
+        # Assert
+```
+
+### Running Tests During Development
 
 ```bash
-# Setup project
-python3 setup.py
+# Watch for changes and run tests automatically
+pytest-watch
 
-# Run both servers
-python3 run.py
+# Run tests in parallel (faster execution)
+pytest -n auto
 
-# Run only backend
-python3 run.py backend
-
-# Run only frontend
-python3 run.py frontend
-
-# Get help
-python3 run.py help
+# Generate coverage badge
+pytest --cov=backend --cov-report=xml
 ```
 
-### API Endpoints
+## Contributing
 
-**Authentication:**
-- `POST /signup` - Create new user account
-- `POST /login` - Login and receive JWT token
+1. **Write tests** for new features
+2. **Maintain test coverage** above 90%
+3. **Follow test naming conventions**
+4. **Include integration tests** for complex workflows
+5. **Test edge cases** and error conditions
 
-**Recipes:**
-- `GET /recipes` - List all recipes (with pagination)
-- `POST /recipes` - Create new recipe (requires auth)
-- `GET /recipes/{id}` - Get specific recipe
-- `PUT /recipes/{id}` - Update recipe (requires ownership)
-- `DELETE /recipes/{id}` - Delete recipe (requires ownership)
-- `GET /search?q=ingredients` - Search recipes by ingredients
+## License
 
-## 🔧 Configuration
-
-### Environment Variables (Optional)
-Create a `.env` file in the project root:
-
-```env
-SECRET_KEY=your-secret-key-here
-DATABASE_URL=sqlite:///./recipes.db
-ACCESS_TOKEN_EXPIRE_MINUTES=10080
-```
-
-### Database
-- Development uses SQLite (`recipes.db`)
-- For production, update `DATABASE_URL` to PostgreSQL
-- Database tables are created automatically on first run
-
-## 📝 Notes
-
-- **Security**: Change the `SECRET_KEY` in `backend/auth.py` for production
-- **CORS**: Currently allows all origins for development
-- **Images**: Currently uses URLs; consider cloud storage for production
-- **Database**: SQLite is fine for development; use PostgreSQL for production
-- **Error Handling**: Basic error responses; enhance for production use
-
-## 🚀 Deployment Considerations
-
-For production deployment:
-
-1. **Environment**: Set proper environment variables
-2. **Database**: Migrate to PostgreSQL or similar
-3. **Security**: Implement proper CORS, rate limiting, HTTPS
-4. **Images**: Use cloud storage (AWS S3, Cloudinary)
-5. **Frontend**: Consider using a proper web server (nginx)
-6. **Monitoring**: Add logging and monitoring tools
+This project is licensed under the MIT License - see the LICENSE file for details.
